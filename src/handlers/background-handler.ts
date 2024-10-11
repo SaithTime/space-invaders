@@ -13,11 +13,11 @@ export class BackgroundHandler {
         }
     }
 
-    tick(deltaTime: number): void {
+    public tick(deltaTime: number): void {
         this.stars.forEach((o) => o.tick(deltaTime));
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    public draw(ctx: CanvasRenderingContext2D): void {
         this.stars.forEach((o) => o.draw(ctx));
     }
 }

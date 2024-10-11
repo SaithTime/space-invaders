@@ -24,10 +24,10 @@ export class EntityHandler {
         this.entities.forEach((e) => e.draw(ctx));
     }
 
-    public addEntity(entity: Entity) {
+    public addEntity(entity: Entity): void {
         this.entities.push(entity);
     }
-    public removeEntity(entity: Entity) {
+    public removeEntity(entity: Entity): void {
         this.entities = this.entities.filter((e) => e != entity);
     }
 }

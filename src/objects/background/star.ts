@@ -12,12 +12,12 @@ export class Star {
         this.x = x;
         this.y = y;
 
-        let sharedRandom = Math.random() * 2.5;
+        let sharedRandom: number = Math.random() * 2.5;
         this.speed = sharedRandom * 300;
         this.size = sharedRandom;
     }
 
-    public tick(deltaTime: number) {
+    public tick(deltaTime: number): void {
         this.y += this.speed * deltaTime;
         if (this.y > this.instance.height) {
             this.y = 0;
@@ -25,7 +25,7 @@ export class Star {
         }
     }
 
-    public draw(ctx: CanvasRenderingContext2D) {
+    public draw(ctx: CanvasRenderingContext2D): void {
         ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
