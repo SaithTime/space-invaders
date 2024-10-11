@@ -2,10 +2,10 @@ import { Game } from "../../main";
 
 export class Star {
     protected instance: Game;
-    x: number;
-    y: number;
-    speed: number;
-    size: number;
+    protected x: number;
+    protected y: number;
+    protected speed: number;
+    protected size: number;
 
     constructor(instance: Game, x: number, y: number) {
         this.instance = instance;

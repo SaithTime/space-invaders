@@ -6,15 +6,15 @@ import { Bullet } from "./bullet";
 export class Player implements Entity {
     protected instance: Game;
     protected inputs: InputHandler;
-    x: number;
-    y: number;
-    height: number;
-    width: number;
-    speedX: number;
-    speedY: number;
+    public x: number;
+    public y: number;
+    public height: number;
+    public width: number;
+    public speedX: number;
+    public speedY: number;
 
-    shotDelay: number;
-    lastShoot: number;
+    private shotDelay: number;
+    private lastShoot: number;
 
 
     constructor(instance: Game) {
@@ -33,14 +33,16 @@ export class Player implements Entity {
     }
 
     tick(deltaTime: number): void {
-        let motX = this.x;
-        let motY = this.y;
+        let motX: number = this.x;
+        let motY: number = this.y;
 
         //Player movements
         if (this.inputs.forward()) { motY -= this.speedY * deltaTime; }
         if (this.inputs.right()) { motX += this.speedX * deltaTime; }
         if (this.inputs.left()) { motX -= this.speedX * deltaTime; }
-        let now = performance.now() / 1000;
+
+        //Player shooting
+        let now: number = performance.now() / 1000;
         if (this.inputs.shoot() && now - this.lastShoot > this.shotDelay) {
             this.lastShoot = now;
             this.instance.entities.addEntity(new Bullet(this.instance, this.x, this.y));
@@ -57,6 +59,7 @@ export class Player implements Entity {
             motX += 0 - motX;
         }
 
+        //Collision left
         if (motX + this.width > this.instance.width) {
             motX -= motX + this.width - this.instance.width;
         }

@@ -16,7 +16,6 @@ export class EntityHandler {
         this.entities.forEach((e) => {
             e.tick(deltaTime)
             if (e instanceof Bullet) {
-                var bullet: Bullet = e;
                 if (!e.alive) this.entities = this.entities.filter((f) => f != e);
             }
         });

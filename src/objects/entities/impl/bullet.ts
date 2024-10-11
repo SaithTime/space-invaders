@@ -2,16 +2,16 @@ import { Game } from "../../../main";
 import { Entity } from "../entity";
 
 export class Bullet implements Entity {
-    instance: Game;
-    x: number;
-    y: number;
-    height: number;
-    width: number;
-    speed: number;
+    protected instance: Game;
+    public x: number;
+    public y: number;
+    public height: number;
+    public width: number;
+    public speed: number;
 
-    alive: boolean;
-    lifeTime: number;
-    age: number;
+    public alive: boolean;
+    protected lifeTime: number;
+    protected age: number;
 
     constructor(instance: Game, x: number, y: number) {
         this.instance = instance;

@@ -1,10 +1,10 @@
 export class Settings {
-    inputForward: string;
-    inputLeft: string;
-    inputRight: string;
-    inputShoot: string;
+    public inputForward: string;
+    public inputLeft: string;
+    public inputRight: string;
+    public inputShoot: string;
 
-    numberOfStars: number;
+    public numberOfStars: number;
 
     constructor() {
         this.inputForward = "z";

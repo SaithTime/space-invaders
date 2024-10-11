@@ -1,13 +1,12 @@
 import { BackgroundHandler } from "./handlers/background-handler";
 import { EntityHandler } from "./handlers/entity-handler";
 import { InputHandler } from "./handlers/input-handler";
-import { Entity } from "./objects/entities/entity";
-import { Player } from "./objects/entities/impl/player";
 import { Settings } from "./settings";
 
 export class Game {
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
+
     public height: number;
     public width: number;
 
