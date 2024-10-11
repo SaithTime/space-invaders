@@ -9,7 +9,8 @@ export class Player implements Entity {
     y: number;
     height: number;
     width: number;
-    speed: number;
+    speedX: number;
+    speedY: number;
 
     constructor(instance: Game) {
         this.instance = instance;
@@ -18,7 +19,9 @@ export class Player implements Entity {
         this.y = this.instance.height - 50;
         this.height = 20;
         this.width = 50;
-        this.speed = 150;
+
+        this.speedX = 150;
+        this.speedY = 200;
     }
 
     tick(deltaTime: number): void {
@@ -26,19 +29,13 @@ export class Player implements Entity {
         let motY = this.y;
 
         //Player movements
-        if (this.inputs.forward()) {
-            motY -= this.speed * (deltaTime / 1000);
-        }
-        if (this.inputs.right()) {
-            motX += this.speed * (deltaTime / 1000);
-        }
-        if (this.inputs.left()) {
-            motX -= this.speed * (deltaTime / 1000);
-        }
+        if (this.inputs.forward()) { motY -= this.speedY * deltaTime; }
+        if (this.inputs.right()) { motX += this.speedX * deltaTime; }
+        if (this.inputs.left()) { motX -= this.speedX * deltaTime; }
+
         //Gravity
         if (motY < this.instance.height - 50) {
-            const gravityForce = 0.4 * (this.instance.height - motY);
-            motY += gravityForce * (deltaTime / 1000);
+            motY += 0.3 * (this.instance.height * 1.5 - motY) * deltaTime;
         }
 
         //Collision right
@@ -49,6 +46,7 @@ export class Player implements Entity {
         if (motX + this.width > this.instance.width) {
             motX -= motX + this.width - this.instance.width;
         }
+
         //Apply motion to position
         this.x = motX;
         this.y = motY;

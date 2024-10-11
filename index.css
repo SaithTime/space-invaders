@@ -19,5 +19,4 @@ canvas {
     background-color: black;
     border: rgb(17, 17, 17) solid 5px;
     border-radius: 2rem;
-    aspect-ratio: "16:9";
 }
