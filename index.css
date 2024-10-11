@@ -4,6 +4,20 @@
     box-sizing: border-box;
 }
 
-canvas {
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: black;
+}
+
+canvas {
+    display: block;
+    background-color: black;
+    border: rgb(17, 17, 17) solid 5px;
+    border-radius: 2rem;
+    aspect-ratio: "16:9";
 }
