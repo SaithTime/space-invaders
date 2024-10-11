@@ -1,23 +1,25 @@
 import { BackgroundHandler } from "./handlers/background-handler";
+import { EntityHandler } from "./handlers/entity-handler";
 import { InputHandler } from "./handlers/input-handler";
 import { Entity } from "./objects/entities/entity";
 import { Player } from "./objects/entities/impl/player";
 import { Settings } from "./settings";
 
 export class Game {
-    private canvas: HTMLCanvasElement;
-    private ctx: CanvasRenderingContext2D;
+    protected canvas: HTMLCanvasElement;
+    protected ctx: CanvasRenderingContext2D;
     public height: number;
     public width: number;
 
     public settings: Settings;
     public inputs: InputHandler;
-    private background: BackgroundHandler;
+    public background: BackgroundHandler;
+    public entities: EntityHandler;
 
 
-    private isRunning: boolean = false;
-    private lastFrame: number = 0;
-    private entities: Entity[] = [];
+    protected isRunning: boolean = false;
+    protected lastFrame: number = 0;
+
 
     constructor() {
         this.canvas = document.getElementById("app") as HTMLCanvasElement;
@@ -28,13 +30,14 @@ export class Game {
         this.settings = new Settings();
         this.inputs = new InputHandler(this);
         this.background = new BackgroundHandler(this);
-        this.entities.push(new Player(this));
+        this.entities = new EntityHandler(this);
+
 
         this.init();
     }
 
     // Fonction pour démarrer le jeu
-    private init(): void {
+    protected init(): void {
         if (!this.isRunning) {
             this.isRunning = true;
             this.lastFrame = performance.now();
@@ -47,22 +50,8 @@ export class Game {
         this.isRunning = false;
     }
 
-    // Fonction de mise à jour (logique du jeu)
-    private tick(deltaTime: number): void {
-        const deltaInSeconds = deltaTime / 1000;
-        this.entities.forEach((e) => e.tick(deltaInSeconds));
-        this.background.tick(deltaInSeconds);
-    }
-
-    // Fonction de dessin (rendu du jeu)
-    private draw(): void {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.background.draw(this.ctx);
-        this.entities.forEach((e) => e.draw(this.ctx))
-    }
-
     // Fonction de la boucle de jeu
-    private gameLoop(time: number): void {
+    protected gameLoop(time: number): void {
         if (!this.isRunning) return;
 
         const deltaTime: number = time - this.lastFrame;
@@ -72,6 +61,21 @@ export class Game {
         this.draw();
 
         requestAnimationFrame((t) => this.gameLoop(t));
+    }
+
+    // Fonction de mise à jour (logique du jeu)
+    protected tick(deltaTime: number): void {
+        const deltaInSeconds = deltaTime / 1000;
+
+        this.background.tick(deltaInSeconds);
+        this.entities.tick(deltaInSeconds);
+    }
+
+    // Fonction de dessin (rendu du jeu)
+    protected draw(): void {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.background.draw(this.ctx);
+        this.entities.draw(this.ctx);
     }
 }
 new Game();

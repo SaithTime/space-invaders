@@ -1,6 +1,7 @@
 import { Game } from "../../../main";
 import { InputHandler } from "../../../handlers/input-handler";
 import { Entity } from "../entity";
+import { Bullet } from "./bullet";
 
 export class Player implements Entity {
     protected instance: Game;
@@ -12,6 +13,10 @@ export class Player implements Entity {
     speedX: number;
     speedY: number;
 
+    shotDelay: number;
+    lastShoot: number;
+
+
     constructor(instance: Game) {
         this.instance = instance;
         this.inputs = instance.inputs;
@@ -22,6 +27,9 @@ export class Player implements Entity {
 
         this.speedX = 150;
         this.speedY = 200;
+
+        this.shotDelay = 1;
+        this.lastShoot = 0;
     }
 
     tick(deltaTime: number): void {
@@ -32,6 +40,12 @@ export class Player implements Entity {
         if (this.inputs.forward()) { motY -= this.speedY * deltaTime; }
         if (this.inputs.right()) { motX += this.speedX * deltaTime; }
         if (this.inputs.left()) { motX -= this.speedX * deltaTime; }
+        let now = performance.now() / 1000;
+        if (this.inputs.shoot() && now - this.lastShoot > this.shotDelay) {
+            this.lastShoot = now;
+            this.instance.entities.addEntity(new Bullet(this.instance, this.x, this.y));
+        }
+
 
         //Gravity
         if (motY < this.instance.height - 50) {
