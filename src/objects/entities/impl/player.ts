@@ -45,21 +45,20 @@ export class Player implements Entity {
         let now: number = performance.now() / 1000;
         if (this.inputs.shoot() && now - this.lastShoot > this.shotDelay) {
             this.lastShoot = now;
-            this.instance.entities.addEntity(new Bullet(this.instance, this.x, this.y));
+            this.instance.entities.addBullet(new Bullet(this.instance, this.x, this.y, this));
         }
-
 
         //Gravity
         if (motY < this.instance.height - 50) {
             motY += 0.3 * (this.instance.height * 1.5 - motY) * deltaTime;
         }
 
-        //Collision right
+        //Collision with border right
         if (motX < 0) {
             motX += 0 - motX;
         }
 
-        //Collision left
+        //Collision with border left
         if (motX + this.width > this.instance.width) {
             motX -= motX + this.width - this.instance.width;
         }
@@ -74,4 +73,9 @@ export class Player implements Entity {
         ctx.beginPath();
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
+
+    get left() { return this.x; }
+    get right() { return this.x + this.width; }
+    get top() { return this.y; }
+    get bottom() { return this.y + this.height; }
 }

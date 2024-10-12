@@ -15,10 +15,8 @@ export class Game {
     public background: BackgroundHandler;
     public entities: EntityHandler;
 
-
     protected isRunning: boolean = false;
     protected lastFrame: number = 0;
-
 
     constructor() {
         this.canvas = document.getElementById("app") as HTMLCanvasElement;
@@ -30,7 +28,6 @@ export class Game {
         this.inputs = new InputHandler(this);
         this.background = new BackgroundHandler(this);
         this.entities = new EntityHandler(this);
-
 
         this.init();
     }
@@ -45,8 +42,9 @@ export class Game {
     }
 
     // Fonction pour arrêter le jeu
-    private stop(): void {
+    public stop(): void {
         this.isRunning = false;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     // Fonction de la boucle de jeu
@@ -64,6 +62,7 @@ export class Game {
 
     // Fonction de mise à jour (logique du jeu)
     protected tick(deltaTime: number): void {
+        if (!this.isRunning) return;
         const deltaInSeconds = deltaTime / 1000;
 
         this.background.tick(deltaInSeconds);
@@ -72,6 +71,7 @@ export class Game {
 
     // Fonction de dessin (rendu du jeu)
     protected draw(): void {
+        if (!this.isRunning) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.background.draw(this.ctx);
         this.entities.draw(this.ctx);

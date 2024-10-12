@@ -7,4 +7,9 @@ export interface Entity {
     tick(deltaTime: number): void;
     draw(ctx: CanvasRenderingContext2D): void;
 
+    get left(): number;
+    get right(): number;
+    get top(): number;
+    get bottom(): number;
+
 }

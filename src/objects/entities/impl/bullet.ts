@@ -3,6 +3,7 @@ import { Entity } from "../entity";
 
 export class Bullet implements Entity {
     protected instance: Game;
+    public shooter: Entity;
     public x: number;
     public y: number;
     public height: number;
@@ -13,8 +14,9 @@ export class Bullet implements Entity {
     protected lifeTime: number;
     protected age: number;
 
-    constructor(instance: Game, x: number, y: number) {
+    constructor(instance: Game, x: number, y: number, shooter: Entity) {
         this.instance = instance;
+        this.shooter = shooter;
         this.x = x + 25 * (Math.random() * 1.5);
         this.y = y - 20;
         this.width = 5;
@@ -22,9 +24,10 @@ export class Bullet implements Entity {
         this.speed = 100;
 
         this.alive = true;
-        this.lifeTime = 3;
+        this.lifeTime = 4;
         this.age = performance.now() / 1000;
     }
+
 
     tick(deltaTime: number): void {
         if (!this.alive) return;
@@ -50,5 +53,8 @@ export class Bullet implements Entity {
             ctx.fill();
         }
     }
-
+    get left() { return this.x; }
+    get right() { return this.x + this.width; }
+    get top() { return this.y; }
+    get bottom() { return this.y + this.height; }
 }
