@@ -9,15 +9,20 @@ export class EntityHandler {
     public player: Player;
     public bullets: Bullet[] = [];
     public ennemies: Ennemy[] = [];
+    public lastSpawn: number;
 
     constructor(instance: Game) {
         this.instance = instance;
         this.player = new Player(instance);
-        this.addEnnemy(new Ennemy(this));
+        this.lastSpawn = performance.now() / 1000;
     }
 
     public tick(deltaTime: number): void {
         this.player.tick(deltaTime);
+        if (performance.now() / 1000 - this.lastSpawn > 1) {
+            this.addEnnemy(new Ennemy(this.instance));
+            this.lastSpawn = performance.now() / 1000;
+        }
         this.bullets.forEach((b) => {
             b.tick(deltaTime);
             if (b.shooter != this.player && this.isColliding(b, this.player)) {
@@ -42,6 +47,8 @@ export class EntityHandler {
                 this.instance.stop();
             }
         });
+        this.bullets = this.bullets.filter((b) => b.alive);
+        this.ennemies = this.ennemies.filter((e) => e.alive);
     }
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ennemies.forEach((e) => e.draw(ctx));

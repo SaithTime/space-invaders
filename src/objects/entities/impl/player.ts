@@ -53,12 +53,12 @@ export class Player implements Entity {
             motY += 0.3 * (this.instance.height * 1.5 - motY) * deltaTime;
         }
 
-        //Collision with border right
+        //Collision with border left
         if (motX < 0) {
             motX += 0 - motX;
         }
 
-        //Collision with border left
+        //Collision with border right
         if (motX + this.width > this.instance.width) {
             motX -= motX + this.width - this.instance.width;
         }
