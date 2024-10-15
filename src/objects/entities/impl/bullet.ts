@@ -1,5 +1,6 @@
 import { Game } from "../../../main";
 import { Entity } from "../entity";
+import { Player } from "./player";
 
 export class Bullet implements Entity {
     protected instance: Game;
@@ -9,7 +10,6 @@ export class Bullet implements Entity {
     public height: number;
     public width: number;
     public speed: number;
-
     public alive: boolean;
     protected lifeTime: number;
     protected age: number;
@@ -18,13 +18,18 @@ export class Bullet implements Entity {
         this.instance = instance;
         this.shooter = shooter;
         this.x = x + 25 * (Math.random() * 1.5);
-        this.y = y - 20;
+
+        if (this.shooter instanceof Player) {
+            this.y = y - 20;
+        } else {
+            this.y = y + 20;
+        }
+
         this.width = 5;
         this.height = 5;
         this.speed = 100;
-
         this.alive = true;
-        this.lifeTime = 4;
+        this.lifeTime = 7;
         this.age = performance.now() / 1000;
     }
 
@@ -32,10 +37,16 @@ export class Bullet implements Entity {
     tick(deltaTime: number): void {
         if (!this.alive) return;
 
-        if (performance.now() / 1000 - this.age >= this.lifeTime) {
+
+        if (this.y < this.instance.height) {
+            if (this.shooter instanceof Player) {
+                this.y -= this.speed * deltaTime;
+            } else {
+                this.y += this.speed * deltaTime;
+            }
+
+        } if (performance.now() / 1000 - this.age >= this.lifeTime || this.bottom > this.instance.height || this.top < 0) {
             this.alive = false;
-        } else if (this.y < this.instance.height) {
-            this.y -= this.speed * deltaTime;
         }
     }
     draw(ctx: CanvasRenderingContext2D): void {
@@ -49,7 +60,12 @@ export class Bullet implements Entity {
         for (let i = 0; i < 3; i++) {
             ctx.fillStyle = 'yellow';
             ctx.beginPath();
-            ctx.arc(this.x, this.y + i * 5, this.height - i, 0, Math.PI * 2);
+            if (this.shooter instanceof Player) {
+                ctx.arc(this.x, this.y + i * 5, this.height - i, 0, Math.PI * 2);
+            } else {
+                ctx.arc(this.x, this.y - i * 5, this.height - i, 0, Math.PI * 2);
+            }
+
             ctx.fill();
         }
     }

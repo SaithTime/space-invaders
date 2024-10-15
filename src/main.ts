@@ -6,15 +6,12 @@ import { Settings } from "./settings";
 export class Game {
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
-
     public height: number;
     public width: number;
-
     public settings: Settings;
     public inputs: InputHandler;
     public background: BackgroundHandler;
     public entities: EntityHandler;
-
     protected isRunning: boolean = false;
     protected lastFrame: number = 0;
 
@@ -23,7 +20,6 @@ export class Game {
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
         this.height = this.canvas.height;
         this.width = this.canvas.width;
-
         this.settings = new Settings();
         this.inputs = new InputHandler(this);
         this.background = new BackgroundHandler(this);

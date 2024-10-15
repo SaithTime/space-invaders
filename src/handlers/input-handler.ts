@@ -7,20 +7,20 @@ export class InputHandler {
 
     constructor(instance: Game) {
         this.settings = instance.settings;
-        window.addEventListener('keydown', (e) => (this.keys[e.key] = true));
-        window.addEventListener('keyup', (e) => (this.keys[e.key] = false));
+        window.addEventListener('keydown', (e) => (this.keys[e.key.toLowerCase()] = true));
+        window.addEventListener('keyup', (e) => (this.keys[e.key.toLowerCase()] = false));
     }
 
     public forward(): boolean {
-        return this.keys[this.settings.inputForward];
+        return this.keys[this.settings.inputForward.toLowerCase()];
     }
     public right(): boolean {
-        return this.keys[this.settings.inputRight];
+        return this.keys[this.settings.inputRight.toLowerCase()];
     }
     public left(): boolean {
-        return this.keys[this.settings.inputLeft];
+        return this.keys[this.settings.inputLeft.toLowerCase()];
     }
     public shoot(): boolean {
-        return this.keys[this.settings.inputShoot];
+        return this.keys[this.settings.inputShoot.toLowerCase()];
     }
 }

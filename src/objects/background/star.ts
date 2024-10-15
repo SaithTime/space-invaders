@@ -26,14 +26,14 @@ export class Star {
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
         for (let i = 0; i < 10; i++) {
             let divider = (i * 3);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
             ctx.beginPath();
             ctx.arc(this.x, this.y - divider, this.size, 0, Math.PI * 2);
             ctx.fill();

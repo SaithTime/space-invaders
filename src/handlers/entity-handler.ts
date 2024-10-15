@@ -15,26 +15,31 @@ export class EntityHandler {
         this.instance = instance;
         this.player = new Player(instance);
         this.lastSpawn = performance.now() / 1000;
+        this.addEnnemy(new Ennemy(this.instance));
     }
 
     public tick(deltaTime: number): void {
         this.player.tick(deltaTime);
-        if (performance.now() / 1000 - this.lastSpawn > 1) {
+        if (performance.now() / 1000 - this.lastSpawn > 0.3) {
             this.addEnnemy(new Ennemy(this.instance));
             this.lastSpawn = performance.now() / 1000;
         }
+
         this.bullets.forEach((b) => {
             b.tick(deltaTime);
-            if (b.shooter != this.player && this.isColliding(b, this.player)) {
-                this.instance.stop;
+            if (!(b.shooter instanceof Player) && this.isColliding(b, this.player)) {
+                this.instance.stop();
             }
-            this.ennemies.forEach((e) => {
-                if (this.isColliding(b, e)) {
-                    e.alive = false;
-                    b.alive = false;
-                }
-            });
+            if (!(b.shooter instanceof Ennemy)) {
+                this.ennemies.forEach((e) => {
+                    if (this.isColliding(b, e)) {
+                        e.alive = false;
+                        b.alive = false;
+                    }
+                });
+            }
         });
+
         this.ennemies.forEach((e) => {
             e.tick(deltaTime);
             this.bullets.forEach((b) => {
@@ -47,12 +52,14 @@ export class EntityHandler {
                 this.instance.stop();
             }
         });
+
         this.bullets = this.bullets.filter((b) => b.alive);
         this.ennemies = this.ennemies.filter((e) => e.alive);
     }
     public draw(ctx: CanvasRenderingContext2D): void {
-        this.ennemies.forEach((e) => e.draw(ctx));
         this.bullets.forEach((b) => b.draw(ctx));
+        this.ennemies.forEach((e) => e.draw(ctx));
+
         this.player.draw(ctx);
     }
 

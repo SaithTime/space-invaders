@@ -12,7 +12,6 @@ export class Player implements Entity {
     public width: number;
     public speedX: number;
     public speedY: number;
-
     private shotDelay: number;
     private lastShoot: number;
 
@@ -28,7 +27,7 @@ export class Player implements Entity {
         this.speedX = 150;
         this.speedY = 200;
 
-        this.shotDelay = 1;
+        this.shotDelay = 0.5
         this.lastShoot = 0;
     }
 
@@ -49,19 +48,13 @@ export class Player implements Entity {
         }
 
         //Gravity
-        if (motY < this.instance.height - 50) {
-            motY += 0.3 * (this.instance.height * 1.5 - motY) * deltaTime;
-        }
+        if (motY < this.instance.height - 50) { motY += 0.3 * (this.instance.height * 1.5 - motY) * deltaTime; }
 
         //Collision with border left
-        if (motX < 0) {
-            motX += 0 - motX;
-        }
+        if (motX < 0) { motX += 0 - motX; }
 
         //Collision with border right
-        if (motX + this.width > this.instance.width) {
-            motX -= motX + this.width - this.instance.width;
-        }
+        if (motX + this.width > this.instance.width) { motX -= motX + this.width - this.instance.width; }
 
         //Apply motion to position
         this.x = motX;

@@ -3,7 +3,6 @@ export class Settings {
     public inputLeft: string;
     public inputRight: string;
     public inputShoot: string;
-
     public numberOfStars: number;
 
     constructor() {
