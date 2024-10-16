@@ -20,7 +20,4 @@ export class InputHandler {
     public left(): boolean {
         return this.keys[this.settings.inputLeft.toLowerCase()];
     }
-    public shoot(): boolean {
-        return this.keys[this.settings.inputShoot.toLowerCase()];
-    }
 }

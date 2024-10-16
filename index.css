@@ -9,6 +9,7 @@
 html,
 body {
     font-family: 'Roboto', sans-serif;
+    user-select: none;
     color: white;
     height: 100%;
     font-weight: 900;
@@ -28,19 +29,38 @@ canvas {
     border-radius: 2rem;
 }
 
+#overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(-250%);
+    transition: transform 500ms;
+}
+
 #replay {
-    display: none;
+    /*display: none;*/
+    opacity: 0;
     border: none;
     border-radius: 16px;
     color: white;
     font-weight: 700;
     font-size: 0.5rem;
-    padding: 1em;
+    line-height: 0;
+    padding: 1.5em 1em 1.5em 1em;
     background-color: hsl(135, 100%, 20%);
 
-    transition: background-color 100ms;
+    transition: background-color 100ms opacity 500ms;
 
     &:hover {
         background-color: hsl(135, 100%, 30%);
+    }
+}
+
+#overlay.show {
+    transform: translateY(0);
+
+    #replay {
+        opacity: 1;
     }
 }

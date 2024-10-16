@@ -17,6 +17,13 @@ export class EntityHandler {
         this.lastSpawn = performance.now() / 1000;
         this.addEnnemy(new Ennemy(this.instance));
     }
+    public stop() {
+        this.lastSpawn = 0;
+        this.ennemies = [];
+        this.bullets = [];
+        this.player.x = this.instance.width / 2;
+        this.player.y = this.instance.height - 50;
+    }
 
     public tick(deltaTime: number): void {
         this.player.tick(deltaTime);

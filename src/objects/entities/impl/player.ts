@@ -42,7 +42,7 @@ export class Player implements Entity {
 
         //Player shooting
         let now: number = performance.now() / 1000;
-        if (this.inputs.shoot() && now - this.lastShoot > this.shotDelay) {
+        if (now - this.lastShoot > this.shotDelay) {
             this.lastShoot = now;
             this.instance.entities.addBullet(new Bullet(this.instance, this.x, this.y, this));
         }
