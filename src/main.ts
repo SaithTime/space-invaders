@@ -6,6 +6,7 @@ import { Settings } from "./settings";
 export class Game {
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
+    protected timer: HTMLParagraphElement;
     public height: number;
     public width: number;
     public settings: Settings;
@@ -18,6 +19,7 @@ export class Game {
     constructor() {
         this.canvas = document.getElementById("app") as HTMLCanvasElement;
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+        this.timer = document.getElementById("timer") as HTMLParagraphElement;
         this.height = this.canvas.height;
         this.width = this.canvas.width;
         this.settings = new Settings();
@@ -47,6 +49,7 @@ export class Game {
     protected gameLoop(time: number): void {
         if (!this.isRunning) return;
 
+        this.timer.innerText = "Timer: " + Math.floor(time / 1000);
         const deltaTime: number = time - this.lastFrame;
         this.lastFrame = time;
 

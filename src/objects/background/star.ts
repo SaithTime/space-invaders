@@ -21,7 +21,6 @@ export class Star {
         this.y += this.speed * deltaTime;
         if (this.y > this.instance.height) {
             this.y = 0;
-
         }
     }
 

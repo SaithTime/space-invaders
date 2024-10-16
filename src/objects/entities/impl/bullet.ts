@@ -37,7 +37,6 @@ export class Bullet implements Entity {
     tick(deltaTime: number): void {
         if (!this.alive) return;
 
-
         if (this.y < this.instance.height) {
             if (this.shooter instanceof Player) {
                 this.y -= this.speed * deltaTime;
